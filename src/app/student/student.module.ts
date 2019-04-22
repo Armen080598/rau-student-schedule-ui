@@ -6,6 +6,8 @@ import {CommonModule} from "@angular/common";
 import {routing} from "./student.routing";
 import {RouterModule} from "@angular/router";
 import {ContainerComponent} from "./component/container/container.component";
+import {StudentDataService} from "./service/student-data.service";
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -16,10 +18,11 @@ import {ContainerComponent} from "./component/container/container.component";
   imports: [
     DragDropModule,
     CommonModule,
+    HttpClientModule,
     RouterModule,
     routing
   ],
-  providers: [],
+  providers: [StudentDataService],
   bootstrap: [StudentComponent]
 })
 export class StudentModule { }

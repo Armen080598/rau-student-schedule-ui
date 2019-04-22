@@ -1,94 +1,19 @@
-import {Component} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
+import {StudentDataService} from "../service/student-data.service";
+import {first} from "rxjs/internal/operators";
 
 @Component({
   selector: 'student-form',
   templateUrl: './student.component.html',
   styleUrls: ['./student.component.css']
 })
-export class StudentComponent {
-  public allData = [
-    {
-      "Sem": "Курс 1 Семестр 1",
-      "disciplines": [
-        "Мат Анализ",
-        "Физкультура",
-        "Руский  язык",
-        "Английский",
-        "Информатика"
-      ]
-    },
-    {
-      "Sem": "Курс 1 Семестр 2",
-      "disciplines": [
-        "Алгебра",
-        "Дискретная математика",
-        "Базы Данных",
-        "Философия",
-        "Психология"
-      ]
-    },
-    {
-      "Sem": "Курс 2 Семестр 1",
-      "disciplines": [
-        "Ассемблер",
-        "Теория графов",
-        "Мат Логика",
-        "Мат статистика",
-        "ОБЖ"
-      ]
-    },
-    {
-      "Sem": "Курс 2 Семестр 2",
-      "disciplines": [
-        "Ассемблер",
-        "Теория графов",
-        "Мат Логика",
-        "Мат статистика",
-        "ОБЖ"
-      ]
-    },
-    {
-      "Sem": "Курс 3 Семестр 1",
-      "disciplines": [
-        "Ассемблер",
-        "Теория графов",
-        "Мат Логика",
-        "Мат статистика",
-        "ОБЖ"
-      ]
-    },
-    {
-      "Sem": "Курс 3 Семестр 2",
-      "disciplines": [
-        "Ассемблер",
-        "Теория графов",
-        "Мат Логика",
-        "Мат статистика",
-        "ОБЖ"
-      ]
-    },
-    {
-      "Sem": "Курс 4 Семестр 1",
-      "disciplines": [
-        "Ассемблер",
-        "Теория графов",
-        "Мат Логика",
-        "Мат статистика",
-        "ОБЖ"
-      ]
-    },
-    {
-      "Sem": "Курс 4 Семестр 2",
-      "disciplines": [
-        "Ассемблер",
-        "Теория графов",
-        "Мат Логика",
-        "Мат статистика",
-        "ОБЖ"
-      ]
-    }
-  ];
+export class StudentComponent implements AfterViewInit{
+  public allData = [];
+
+  constructor(private studentService: StudentDataService) {
+
+  }
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer !== event.container) {
@@ -97,5 +22,20 @@ export class StudentComponent {
         event.previousIndex,
         event.currentIndex);
     }
+
+  }
+
+  private _fileUpload: HTMLInputElement;
+
+  ngAfterViewInit() {
+    this._fileUpload = document.getElementById('upload') as HTMLInputElement;
+    this._fileUpload.onchange = () => {
+      this.studentService.uploadFile(this._fileUpload.files[0]).pipe(first()).subscribe(res => {
+        this.allData = res;
+      });
+    };
+    /*this.studentService.getStudentData().pipe(first()).subscribe(res => {
+      this.allData = res;
+    });*/
   }
 }
