@@ -1,0 +1,5 @@
+<div cdkDropListGroup>
+  <ng-container *ngFor="let data of allData">
+    <student-container [title]="data.Sem" [items]="data.disciplines" (dropEvent)="drop($event)"></student-container>
+  </ng-container>
+</div>
