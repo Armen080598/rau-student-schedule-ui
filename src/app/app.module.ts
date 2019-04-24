@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import {routing} from './app.routing';
-import {CommonModule} from "@angular/common";
+import {MatButtonModule, MatCardModule} from "@angular/material";
 
 
 @NgModule({
@@ -12,7 +12,9 @@ import {CommonModule} from "@angular/common";
   ],
   imports: [
     BrowserModule,
-    routing
+    routing,
+    MatButtonModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

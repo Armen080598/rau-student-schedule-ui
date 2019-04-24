@@ -8,6 +8,7 @@ import {RouterModule} from "@angular/router";
 import {ContainerComponent} from "./component/container/container.component";
 import {StudentDataService} from "./service/student-data.service";
 import {HttpClientModule} from "@angular/common/http";
+import {MatButtonModule, MatCardModule} from "@angular/material";
 
 
 @NgModule({
@@ -19,6 +20,8 @@ import {HttpClientModule} from "@angular/common/http";
     DragDropModule,
     CommonModule,
     HttpClientModule,
+    MatButtonModule,
+    MatCardModule,
     RouterModule,
     routing
   ],

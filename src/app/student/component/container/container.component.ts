@@ -10,11 +10,11 @@ export class ContainerComponent {
   @Input()
   set items(items: any[]){
     this._items = items.map(item => {
-      const examText = item.isExam ? 'Экзамен' : 'Зачёт';
+      const examText = item.exam ? 'Экзамен' : 'Зачёт';
       if(item.time){
-        return `${item.DisciplineName} (${item.time} часов,${examText})`;
+        return `${item.name} (${item.time} часов,${examText})`;
       } else {
-        return `${item.DisciplineName} (${examText})`;
+        return `${item.name} (${examText})`;
       }
     });
   }

@@ -1,7 +1,13 @@
-<div cdkDropListGroup>
-  <ng-container *ngFor="let data of allData">
-    <student-container [title]="data.Sem" [items]="data.disciplines" (dropEvent)="drop($event)"></student-container>
-  </ng-container>
-</div>
+<mat-card-actions *ngIf="dataIsLoaded">
+  <button (click)="saveData()" mat-raised-button>Save</button>
+</mat-card-actions>
+<mat-card>
+  <div cdkDropListGroup>
+    <ng-container *ngFor="let data of allData">
+      <student-container [title]="data.sem" [items]="data.disciplines" (dropEvent)="drop($event)"></student-container>
+    </ng-container>
+  </div>
 
-<input id="upload" type="file">
+  <input *ngIf="!dataIsLoaded" id="upload" type="file">
+
+</mat-card>

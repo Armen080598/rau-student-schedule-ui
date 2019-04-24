@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs/index";
 import {map} from "rxjs/internal/operators";
+import {ResponseModel} from "../model/ResponseModel";
 
 @Injectable()
 export class StudentDataService {
@@ -15,30 +16,48 @@ export class StudentDataService {
     return `КУРС ${Math.ceil(semesterNumber / 2)} Семестер ${semester}`;
   }
 
-  processData(res: any[]) {
-    return res.sort((a,b) => a.Semester - b.Semester).reduce((acc, item) => {
-      const index = acc.findIndex(setItem => setItem.Semester === item.Semester);
+  processData(res: ResponseModel[]) {
+    return res.sort((a,b) => +a.semester - (+b.semester)).reduce((acc, item) => {
+      const index = acc.findIndex(setItem => setItem.semester === item.semester);
       if(index === -1) {
         acc.push({
-          Semester: item.Semester,
-          disciplines: [item.Discipline]
+          semester: item.semester,
+          disciplines: [item.discipline]
         });
       } else {
-        acc[index].disciplines.push(item.Discipline);
+        acc[index].disciplines.push(item.discipline);
       }
       return acc;
     }, []).map(item => {
-      item.Sem = this.getSemesterFromNumber(+item.Semester);
+      item.sem = this.getSemesterFromNumber(+item.semester);
       return item;
     });
+  }
+
+  public saveData(data: any): Observable<any> {
+    const requestObject: ResponseModel =
+      data.flatMap((dataItem: any) => {
+        return dataItem.disciplines.map((discipline: any) => {
+            return {
+              semester: dataItem.semester,
+              discipline: discipline
+            }
+        });
+      });
+    return this.http.post(`${this.backendUrl}/update`, JSON.stringify(requestObject), {headers: this.headers});
   }
 
   public uploadFile(file: File): Observable<any> {
     const formData = new FormData();
     formData.append('file', file);
-    return this.http.post(`${this.backendUrl}/xml`, formData).pipe(map(res => {
+    return this.http.post(`${this.backendUrl}/xml`, formData).pipe(map((res: ResponseModel[])=> {
       return this.processData(res);
     }));
+  }
+
+  get headers(): HttpHeaders {
+    let headers: HttpHeaders = new HttpHeaders();
+    return headers.append('content-type', 'application/json')
   }
 
   get backendUrl(): string {

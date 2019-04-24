@@ -1,5 +1,5 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
+import {AfterViewInit, Component} from '@angular/core';
+import {CdkDragDrop, transferArrayItem} from "@angular/cdk/drag-drop";
 import {StudentDataService} from "../service/student-data.service";
 import {first} from "rxjs/internal/operators";
 
@@ -10,6 +10,8 @@ import {first} from "rxjs/internal/operators";
 })
 export class StudentComponent implements AfterViewInit{
   public allData: any[] = [];
+
+  public dataIsLoaded: boolean;
 
   constructor(private studentService: StudentDataService) {
 
@@ -31,11 +33,13 @@ export class StudentComponent implements AfterViewInit{
     this._fileUpload = document.getElementById('upload') as HTMLInputElement;
     this._fileUpload.onchange = () => {
       this.studentService.uploadFile(this._fileUpload.files[0]).pipe(first()).subscribe((res: any[]) => {
+        this.dataIsLoaded = true;
         this.allData = res;
       });
     };
-    /*this.studentService.getStudentData().pipe(first()).subscribe(res => {
-      this.allData = res;
-    });*/
+  }
+
+  public saveData() {
+    this.studentService.saveData(this.allData).subscribe();
   }
 }
