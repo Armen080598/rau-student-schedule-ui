@@ -9,7 +9,7 @@ import {first} from "rxjs/internal/operators";
   styleUrls: ['./student.component.css']
 })
 export class StudentComponent implements AfterViewInit{
-  public allData = [];
+  public allData: any[] = [];
 
   constructor(private studentService: StudentDataService) {
 
@@ -30,7 +30,7 @@ export class StudentComponent implements AfterViewInit{
   ngAfterViewInit() {
     this._fileUpload = document.getElementById('upload') as HTMLInputElement;
     this._fileUpload.onchange = () => {
-      this.studentService.uploadFile(this._fileUpload.files[0]).pipe(first()).subscribe(res => {
+      this.studentService.uploadFile(this._fileUpload.files[0]).pipe(first()).subscribe((res: any[]) => {
         this.allData = res;
       });
     };

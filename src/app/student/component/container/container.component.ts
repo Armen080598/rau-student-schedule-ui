@@ -8,7 +8,20 @@ import {CdkDragDrop} from "@angular/cdk/drag-drop";
 })
 export class ContainerComponent {
   @Input()
-  public items: any[];
+  set items(items: any[]){
+    this._items = items.map(item => {
+      const examText = item.isExam ? 'Экзамен' : 'Зачёт';
+      if(item.time){
+        return `${item.DisciplineName} (${item.time} часов,${examText})`;
+      } else {
+        return `${item.DisciplineName} (${examText})`;
+      }
+    });
+  }
+  get items(){
+    return this._items;
+  }
+  public _items: any[];
 
   @Input()
   public title: any;
