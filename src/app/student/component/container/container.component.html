@@ -6,6 +6,8 @@
     [cdkDropListData]="items"
     class="example-list"
     (cdkDropListDropped)="drop($event)">
-    <div class="example-box" *ngFor="let item of items" cdkDrag>{{item}}</div>
+    <div class="example-box" *ngFor="let item of items" cdkDrag>
+      {{item.name + ' (' + (item.time ? item.time + ' часов, ' : '') + (item.exam ? 'Экзамен)' : 'Зачёт)')}}
+    </div>
   </div>
 </div>
