@@ -42,4 +42,8 @@ export class StudentComponent implements AfterViewInit{
   public saveData() {
     this.studentService.saveData(this.allData).subscribe();
   }
+
+  getFileUrl() {
+    this.studentService.getFile();
+  }
 }
