@@ -67,14 +67,14 @@ export class StudentDataService {
   getFile(){
     const xhr = new XMLHttpRequest();
     xhr.responseType = 'document';
-    xhr.open('GET', `${this.backendUrl}/xml/update`);
+    xhr.open('GET', `${this.backendUrl}/xml/download`);
     xhr.overrideMimeType('text/xml');
     xhr.onload = function () {
       if (xhr.readyState === xhr.DONE) {
         if (xhr.status === 200) {
           let xmlText = new XMLSerializer().serializeToString(xhr.response);
           let blob = new Blob([xmlText], {type: 'text/plain'});
-          let filename = "file.xml";
+          let filename = "file.plm.xml";
           let pom = document.createElement('a');
           pom.setAttribute('href', window.URL.createObjectURL(blob));
           pom.setAttribute('download', filename);
