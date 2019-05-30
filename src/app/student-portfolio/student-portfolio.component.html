@@ -1,0 +1,24 @@
+<mat-card>
+  <h2>Студенты</h2>
+  <hr>
+  <button mat-raised-button (click)="openStudentPopup()">Создать студента</button>
+  <hr>
+  <table class="standard_table">
+    <thead>
+    <tr>
+      <th class="table_large-col">
+        Имя и Фамилия
+      </th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let student of students">
+      <td><a (click)="navigateToStudent(student)">{{student.firstName + ' ' + student.lastName}}</a></td>
+      <td><button mat-raised-button (click)="downloadFile(student)">Скачать Учебный План</button></td>
+      <td><button mat-raised-button (click)="deleteStudent(student)">Удалить</button></td>
+    </tr>
+    </tbody>
+  </table>
+</mat-card>

@@ -1,0 +1,22 @@
+<mat-card>
+  <h2>Факультеты</h2>
+  <hr>
+  <button mat-raised-button (click)="openFacultyPopup()">Создать факультет</button>
+  <hr>
+  <table class="standard_table">
+    <thead>
+    <tr>
+      <th class="table_large-col">
+        Факультет
+      </th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let faculty of faculties">
+      <td><a (click)="navigateToStudents(faculty)">{{faculty.name}}</a></td>
+      <td><button mat-raised-button (click)="delete(faculty)">Удалить</button></td>
+    </tr>
+    </tbody>
+  </table>
+</mat-card>

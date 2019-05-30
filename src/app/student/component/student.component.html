@@ -1,4 +1,4 @@
-<mat-card-actions *ngIf="dataIsLoaded">
+<mat-card-actions>
   <button (click)="saveData()" mat-raised-button>Save</button>
 </mat-card-actions>
 <mat-card>
@@ -8,6 +8,6 @@
     </ng-container>
   </div>
 
-  <input *ngIf="!dataIsLoaded" id="upload" type="file">
+  <!--<input *ngIf="!dataIsLoaded" id="upload" type="file">-->
 
 </mat-card>
